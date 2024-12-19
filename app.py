@@ -4,7 +4,9 @@ from io import BytesIO
 from datetime import datetime
 
 app = Flask(__name__)
-
+@app.route('/')
+def getroute():
+    return "hello world"
 @app.route('/generate-pdf', methods=['POST'])
 def generate_pdf():
     try:
