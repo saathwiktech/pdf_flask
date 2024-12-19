@@ -1,0 +1,187 @@
+{
+    "project": "Udupi",
+    "clientName": "Abhay",
+    "work": {
+        "_id": "675953a92c3102bc3ffc406f",
+        "wid": "cffyn974yvwg6smkhzjsm4jnogws",
+        "sft": 0,
+        "cft": 0,
+        "name": "foundation",
+        "pid": "675953a72c3102bc3ffc406b",
+        "__v": 0
+    },
+    "subworks": [
+        {
+            "default": {
+                "SFT": 10,
+                "CFT": 0
+            },
+            "_id": "675953b22c3102bc3ffc4082",
+            "wid": "675953a92c3102bc3ffc406f",
+            "name": "earthwork",
+            "details": [
+                {
+                    "id": "17339074531231418",
+                    "name": "Unnamed",
+                    "length": 25.52,
+                    "breadth": 1,
+                    "depth": 2,
+                    "number": 1,
+                    "quantity": 25.52,
+                    "_id": "675d21ee2f40db4eedde115f"
+                },
+                {
+                    "id": "17339074531277361",
+                    "name": "Unnamed",
+                    "length": 4,
+                    "breadth": 2,
+                    "depth": 5,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "675953fd2c3102bc3ffc4093"
+                },
+                {
+                    "id": "17339816763442968",
+                    "name": "ini",
+                    "length": 5,
+                    "breadth": 1,
+                    "depth": 0,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "675a75ec2f40db4eedddfffe"
+                },
+                {
+                    "id": "1734069063181134",
+                    "name": "Mini",
+                    "length": 5,
+                    "breadth": 2,
+                    "depth": 0,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "675bcb472f40db4eedde0716"
+                },
+                {
+                    "id": "17340690631811377",
+                    "name": "Unnamed",
+                    "length": 3,
+                    "breadth": 2,
+                    "depth": 1,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "675bcb472f40db4eedde0717"
+                },
+                {
+                    "id": "17340690638382241",
+                    "name": "Mini",
+                    "length": 5,
+                    "breadth": 2,
+                    "depth": 0,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "675bcb472f40db4eedde0722"
+                },
+                {
+                    "id": "17345161132791427",
+                    "name": "G",
+                    "length": 1,
+                    "breadth": 2,
+                    "depth": 1,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "67629d912f40db4eedde135f"
+                }
+            ],
+            "reductions": [
+                {
+                    "id": "17339074687149281",
+                    "name": "window 2 ",
+                    "length": 2,
+                    "breadth": 1,
+                    "depth": 2,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "6759540c2c3102bc3ffc4098"
+                },
+                {
+                    "id": "17339077777384672",
+                    "name": "bff",
+                    "length": 4,
+                    "breadth": 2,
+                    "depth": 5,
+                    "number": 1,
+                    "quantity": 8,
+                    "_id": "675955412c3102bc3ffc40c2"
+                },
+                {
+                    "id": "17339817191005220",
+                    "name": "Unnamed",
+                    "length": 10,
+                    "breadth": 1,
+                    "depth": 0,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "675a76172f40db4eedde002e"
+                },
+                {
+                    "id": "17340693431135813",
+                    "name": "G",
+                    "length": 1,
+                    "breadth": 2,
+                    "depth": 2,
+                    "number": 1,
+                    "quantity": 1,
+                    "_id": "675bcc5f2f40db4eedde075b"
+                }
+            ],
+            "__v": 10
+        },
+        {
+            "default": {
+                "SFT": 16,
+                "CFT": 0
+            },
+            "_id": "675953b32c3102bc3ffc4084",
+            "wid": "675953a92c3102bc3ffc406f",
+            "name": "bed concrete",
+            "details": [],
+            "reductions": [],
+            "__v": 0
+        },
+        {
+            "default": {
+                "SFT": 0,
+                "CFT": 18
+            },
+            "_id": "675953b32c3102bc3ffc4086",
+            "wid": "675953a92c3102bc3ffc406f",
+            "name": "rr masonry",
+            "details": [],
+            "reductions": [],
+            "__v": 0
+        },
+        {
+            "default": {
+                "SFT": 0,
+                "CFT": 17
+            },
+            "_id": "675953b32c3102bc3ffc4088",
+            "wid": "675953a92c3102bc3ffc406f",
+            "name": "ss masonry",
+            "details": [],
+            "reductions": [],
+            "__v": 0
+        },
+        {
+            "default": {
+                "SFT": 17,
+                "CFT": 0
+            },
+            "_id": "675953b32c3102bc3ffc408a",
+            "wid": "675953a92c3102bc3ffc406f",
+            "name": "dpc",
+            "details": [],
+            "reductions": [],
+            "__v": 0
+        }
+    ]
+}
