@@ -141,7 +141,7 @@ def generate_pdf():
             <p><strong>Client Name:</strong> {client_name}</p>
             <p><strong>Date:</strong> {datetime.now().strftime('%Y-%m-%d')}</p>
             {subworks_html}
-            <h2>Grand Total :<strong> R.s {grand_total:.2f}</strong></h2>
+            <h2>Grand Total :<strong> Rs. {grand_total:.2f}</strong></h2>
         </body>
         </html>
         """
