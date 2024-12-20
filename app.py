@@ -59,7 +59,7 @@ def generate_pdf():
                 reduction_quantity += quantity
                 reductions_rows += f"<tr><td>{count}</td><td>{r['name']}</td><td>{r['number']}</td>" \
                                    f"<td>{r['length']}</td><td>{r['breadth']}</td><td>{r['depth']}</td>" \
-                                   f"<td>{quantity}</td><td></td><td></td></tr>"
+                                   f"<td>{quantity}</td><td>-</td><td>-</td></tr>"
             reductions_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
                    f"<td>{reduction_quantity:.2f}</td><td>{rr}</td><td><strong>R.s {reduction_quantity * rr:.2f}</strong></td></tr>"
 
