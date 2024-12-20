@@ -40,7 +40,7 @@ def generate_pdf():
                 total_quantity += quantity
                 details_rows += f"<tr><td>{count}</td><td>{d['name']}</td><td>{d['number']}</td>" \
                                 f"<td>{d['length']}</td><td>{d['breadth']}</td><td>{d['depth']}</td>" \
-                                f"<td>{quantity:.2f}</td><td>{r}</td><td>{r*quantity:.2f}</td></tr>"                                
+                                f"<td>{quantity:.2f}</td><td>-</td><td>-</td></tr>"                                
             details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
                    f"<td>{total_quantity:.2f}</td><td>{r}</td><td><strong>R.s {total_quantity * r:.2f}</strong></td></tr>"
 
@@ -59,7 +59,7 @@ def generate_pdf():
                 reduction_quantity += quantity
                 reductions_rows += f"<tr><td>{count}</td><td>{r['name']}</td><td>{r['number']}</td>" \
                                    f"<td>{r['length']}</td><td>{r['breadth']}</td><td>{r['depth']}</td>" \
-                                   f"<td>{quantity:.2f}</td><td>{rr}</td><td>{quantity*rr:.2f}</td></tr>"
+                                   f"<td>{quantity}</td><td></td><td></td></tr>"
             reductions_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
                    f"<td>{reduction_quantity:.2f}</td><td>{rr}</td><td><strong>R.s {reduction_quantity * rr:.2f}</strong></td></tr>"
 
@@ -82,7 +82,7 @@ def generate_pdf():
                 <thead>
                     <tr>
                         <th>S.No</th><th>Name</th><th>Number</th>
-                        <th>Length(ft)</th><th>Breadth(ft)</th><th>Depth(ft)</th><th>Quantity</th><th>Unit(SFT/CFT)</th><th>Total (R.s)</th>
+                        <th>Length(ft)</th><th>Breadth(ft)</th><th>Depth(ft)</th><th>Quantity</th><th>Unit/Rate</th><th>Amount (Rs.)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,7 +94,7 @@ def generate_pdf():
                 <thead>
                     <tr>
                         <th>S.No</th><th>Name</th><th>Number</th>
-                        <th>Length(ft)</th><th>Breadth(ft)</th><th>Depth(ft)</th><th>Quantity</th><th>Unit(SFT/CFT)</th><th>Total(R.s)</th>
+                        <th>Length(ft)</th><th>Breadth(ft)</th><th>Depth(ft)</th><th>Quantity</th><th>Unit/Rate</th><th>Amount(Rs.)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,7 +105,7 @@ def generate_pdf():
 
             <p> Deductions: <strong>{reduction_quantity:.2f}</strong></p>
             <p> Net Quantity: <strong>{net_quantity:.2f}</strong></p>
-            <p>Total Cost: <strong>R.s {total_cost:.2f}</strong></p>
+            <p>Total Cost: <strong>Rs. {total_cost:.2f}</strong></p>
             """
 
       
