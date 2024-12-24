@@ -360,7 +360,7 @@ def generate_xlsx_subwork():
         default_sft = default_value.get("SFT", 0)
         default_cft = default_value.get("CFT", 0)
         reductions = subworks.get("reductions", [])
-
+        subworkName=subworks.get("name")
         # Create an Excel workbook and sheet
         workbook = Workbook()
         sheet = workbook.active
@@ -370,7 +370,7 @@ def generate_xlsx_subwork():
         sheet.append([f"Project Name: {project_name}"])
         sheet.append([f"Client Name: {client_name}"])
         sheet.append([f"Work Name: {work}"])
-        sheet.append([f"SubWork Name:{ subworks.get("name")}"])
+        sheet.append([f"SubWork Name:{subworkName}"])
         sheet.append([f"Date: {datetime.now().strftime('%Y-%m-%d')}"])
         sheet.append([])
 
