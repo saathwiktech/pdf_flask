@@ -395,8 +395,8 @@ def generate_xlsx_subwork():
         # sheet.append([])
 
         # Add reduction rows
-        sheet.append(["Reductions"])
-        sheet.append(headers)
+        sheet.append(["Deductions"])
+        # sheet.append(headers)
         reduction_quantity = 0
 
         for idx, subwork in enumerate(reductions, start=1):
