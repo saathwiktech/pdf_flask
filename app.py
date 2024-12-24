@@ -41,9 +41,8 @@ def generate_pdf():
                 total_quantity += quantity
                 details_rows += f"<tr><td>{count}</td><td>{d['name']}</td><td>{d['number']}</td>" \
                                 f"<td>{d['length']}</td><td>{d['breadth']}</td><td>{d['depth']}</td>" \
-                                f"<td>{quantity:.2f}</td><td>{r}</td><td>{r*quantity:.2f}</td></tr>"                                
-            details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
-                   f"<td>{total_quantity:.2f}</td><td>{r}</td><td><strong>Rs. {total_quantity * r:.2f}</strong></td></tr>"
+                                f"<td>{quantity:.2f}</td><td>-</td><td>-</td></tr>"                                
+            details_rows += f"<tr><td>Deduction</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>"
 
             reduction_quantity = 0
             reductions_rows = ""
@@ -58,11 +57,11 @@ def generate_pdf():
                 else:
                     quantity = 0
                 reduction_quantity += quantity
-                reductions_rows += f"<tr><td>{count}</td><td>{r['name']}</td><td>{r['number']}</td>" \
+                details_rows += f"<tr><td>{count}</td><td>{r['name']}</td><td>{r['number']}</td>" \
                                    f"<td>{r['length']}</td><td>{r['breadth']}</td><td>{r['depth']}</td>" \
-                                   f"<td>{quantity:.2f}</td><td>{rr}</td><td>{quantity*rr:.2f}</td></tr>"
-            reductions_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
-                   f"<td>{reduction_quantity:.2f}</td><td>{rr}</td><td><strong>Rs. {reduction_quantity * rr:.2f}</strong></td></tr>"
+                                   f"<td>{quantity:.2f}</td><td>-</td><td>-</td></tr>"
+            details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
+                   f"<td>{(total_quantity-reduction_quantity):.2f}</td><td>{rr}</td><td><strong>Rs. {(total_quantity-reduction_quantity) * rr:.2f}</strong></td></tr>"
 
             
             
@@ -90,18 +89,7 @@ def generate_pdf():
                     {details_rows if details else '<tr><td colspan="9" style="text-align: center;">No details available</td></tr>'}
                 </tbody>
             </table>
-            <div>Deduction Table</div>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
-                <thead>
-                    <tr>
-                        <th>S.No</th><th>Name</th><th>Number</th>
-                        <th>Length(ft)</th><th>Breadth(ft)</th><th>Depth(ft)</th><th>Quantity</th><th>Unit(SFT/CFT)</th><th>Total(Rs.)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {reductions_rows if reductions else '<tr><td colspan="9" style="text-align: center;">No reductions available</td></tr>'}
-                </tbody>
-            </table>
+           
             <p>Total Quantity: {total_quantity:.2f}</p>
 
             <p> Deductions: <strong>{reduction_quantity:.2f}</strong></p>
@@ -218,14 +206,14 @@ def generate_pdf_subwork():
         """
 
     # Add totals row
-    details_rows += f"""
-        <tr>
-            <td colspan="6" style="text-align: center;">Total</td>
-            <td>{total_quantity:.2f}</td>
-            <td>{rate}</td>
-            <td><strong>Rs. {total_quantity*rate:.2f}</strong></td>
-        </tr>
-    """
+    # details_rows += f"""
+    #     <tr>
+    #         <td colspan="6" style="text-align: center;">Total</td>
+    #         <td>{total_quantity:.2f}</td>
+    #         <td>{rate}</td>
+    #         <td><strong>Rs. {total_quantity*rate:.2f}</strong></td>
+    #     </tr>
+    # """
     details_rows += f"""
         <tr>
              <td><h3>Deductions</h3></td>
@@ -272,16 +260,12 @@ def generate_pdf_subwork():
     details_rows += f"""
         <tr>
             <td colspan="6" style="text-align: center;">Total</td>
-            <td>{reduction_quantity:.2f}</td>
+            <td>{(total_quantity-reduction_quantity):.2f}</td>
             <td>{rate}</td>
-            <td><strong>Rs. {reduction_quantity*rate:.2f}</strong></td>
+            <td><strong>Rs. {(total_quantity-reduction_quantity)*rate:.2f}</strong></td>
         </tr>
-    """
+     """
 
-    # Generate reductions table if present
-    
-    
-    # Generate HTML
     subworks_html = f"""
         <p>Default SFT: {default_sft}, Default CFT: {default_cft}</p>
         <table>
@@ -399,14 +383,16 @@ def generate_xlsx_subwork():
                 subwork.get("length", 0),
                 subwork.get("breadth", 0),
                 subwork.get("depth", 0),
-                round(quantity, 2),
+                # round(quantity, 2),
                 "",
-                round(total, 2)
+                "",
+                ""
+                # round(total, 2)
             ])
 
         # Add total row
-        sheet.append(["", "", "", "", "", "Total", round(total_quantity, 2), rate, round(total_quantity * rate, 2)])
-        sheet.append([])
+        # sheet.append(["", "", "", "", "", "Total", round(total_quantity, 2), rate, round(total_quantity * rate, 2)])
+        # sheet.append([])
 
         # Add reduction rows
         sheet.append(["Reductions"])
@@ -428,14 +414,16 @@ def generate_xlsx_subwork():
                 subwork.get("length", 0),
                 subwork.get("breadth", 0),
                 subwork.get("depth", 0),
-                round(quantity, 2),
+                # round(quantity, 2),
                 "-",
-                round(total, 2)
+                "-",
+                "-",
+                # round(total, 2)
             ])
 
         # Add total reduction row
-        sheet.append(["", "", "", "", "", "Total", round(reduction_quantity, 2), rate, round(reduction_quantity * rate, 2)])
-        sheet.append([])
+        sheet.append(["", "", "", "", "", "Total", "", "", round((total_quantity - reduction_quantity)*rate, 2)])
+        # sheet.append([])
 
         # Grand total
         sheet.append([f"Net Quantity : {round((total_quantity - reduction_quantity), 2)}"])
