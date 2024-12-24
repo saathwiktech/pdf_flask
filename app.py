@@ -225,6 +225,20 @@ def generate_pdf_subwork():
             <td><strong>Rs. {total_quantity*rate:.2f}</strong></td>
         </tr>
     """
+    details_rows += f"""
+        <tr>
+             <td><h3>Deductions</h3></td>
+             <td>-</td>
+             <td>-</td>
+             <td>-</td>
+             <td>-</td>
+             <td>-</td>
+             <td>-</td>
+             <td>-</td>
+             <td>-</td>
+        </tr>
+    """
+    
     reduction_quantity = 0
     reduction_rows=""
     for idx, subwork in enumerate(reductions, start=1):
@@ -239,7 +253,7 @@ def generate_pdf_subwork():
         total = rate * quantity
         reduction_quantity += quantity
         grand_total += total
-        reduction_rows += f"""
+        details_rows += f"""
             <tr>
                 <td>{idx}</td>
                 <td>{subwork.get('name', 'Unnamed')}</td>
@@ -254,7 +268,7 @@ def generate_pdf_subwork():
         """
 
     # Add totals row
-    reduction_rows += f"""
+    details_rows += f"""
         <tr>
             <td colspan="6" style="text-align: center;">Total</td>
             <td>{reduction_quantity:.2f}</td>
@@ -287,25 +301,7 @@ def generate_pdf_subwork():
                 {details_rows}
             </tbody>
         </table>
-        <h3>Deductions</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name</th>
-                    <th>Number</th>
-                    <th>Length (ft)</th>
-                    <th>Breadth (ft)</th>
-                    <th>Depth (ft)</th>
-                    <th>Quantity</th>
-                    <th>Rate</th>
-                    <th>Total (Rs.)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {reduction_rows}
-            </tbody>
-        </table>
+        
         <p>Total Quantity: {total_quantity:.2f}</p>
         <p>Deduction Quantity: {reduction_quantity:.2f}</p>
         <h2>Grand Total: <strong>Rs. {(total_quantity-reduction_quantity)*rate:.2f}</strong></h2>
@@ -324,6 +320,7 @@ def generate_pdf_subwork():
         <body>
             <h1>{project_name}</h1>
             <h2>Work Name : {work}</h2>
+            <h2>SubWork Name : {subwork.get("name") }</h2>
 
             <span>ABC Company </span>
             <p><strong>Project Name:</strong> {project_name}</p>
