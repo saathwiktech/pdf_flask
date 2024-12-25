@@ -60,9 +60,6 @@ def generate_pdf():
                 details_rows += f"<tr><td>{count}</td><td>{r['name']}</td><td>{r['number']}</td>" \
                                    f"<td>{r['length']}</td><td>{r['breadth']}</td><td>{r['depth']}</td>" \
                                    f"<td>{quantity:.2f}</td><td>-</td><td>-</td></tr>"
-            details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
-                   f"<td>{(total_quantity-reduction_quantity):.2f}</td><td>{rr}</td><td><strong>Rs. {(total_quantity-reduction_quantity) * rr:.2f}</strong></td></tr>"
-
             
             
             net_quantity = total_quantity - reduction_quantity
@@ -74,6 +71,9 @@ def generate_pdf():
            
             total_cost = net_quantity * rate
             grand_total += total_cost
+            details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
+                   f"<td>{(net_quantity):.2f}</td><td>{rate}</td><td><strong>Rs. {(net_quantity) * rate:.2f}</strong></td></tr>"
+
             
             subworks_html += f"""
             <h3>{idx}. {name}</h3>
@@ -171,6 +171,7 @@ def generate_pdf_subwork():
     total_quantity = 0
 
     grand_total = 0
+    rate=0
     if default_sft!=0:
         rate=default_sft
     
@@ -383,8 +384,8 @@ def generate_xlsx_subwork():
                 subwork.get("length", 0),
                 subwork.get("breadth", 0),
                 subwork.get("depth", 0),
-                # round(quantity, 2),
-                "",
+                round(quantity, 2),
+                
                 "",
                 ""
                 # round(total, 2)
@@ -414,15 +415,15 @@ def generate_xlsx_subwork():
                 subwork.get("length", 0),
                 subwork.get("breadth", 0),
                 subwork.get("depth", 0),
-                # round(quantity, 2),
-                "-",
-                "-",
-                "-",
+                round(quantity, 2),
+                
+                "",
+                "",
                 # round(total, 2)
             ])
 
         # Add total reduction row
-        sheet.append(["", "", "", "", "", "Total", "", "", round((total_quantity - reduction_quantity)*rate, 2)])
+        sheet.append(["", "", "", "", "", "Total",  round((total_quantity - reduction_quantity)),rate, round((total_quantity - reduction_quantity)*rate, 2)])
         # sheet.append([])
 
         # Grand total
