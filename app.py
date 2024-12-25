@@ -206,15 +206,6 @@ def generate_pdf_subwork():
             </tr>
         """
 
-    # Add totals row
-    # details_rows += f"""
-    #     <tr>
-    #         <td colspan="6" style="text-align: center;">Total</td>
-    #         <td>{total_quantity:.2f}</td>
-    #         <td>{rate}</td>
-    #         <td><strong>Rs. {total_quantity*rate:.2f}</strong></td>
-    #     </tr>
-    # """
     details_rows += f"""
         <tr>
              <td><h3>Deductions</h3></td>
