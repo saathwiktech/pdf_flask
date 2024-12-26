@@ -219,6 +219,8 @@ def generate_pdf_subwork():
                 <td>-</td>
             </tr>
         """
+    details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
+                   f"<td><strong>{(total_quantity):.2f}</strong></td><td>-</td><td>-</td></tr>"
 
     details_rows += f"""
         <tr>
@@ -261,6 +263,8 @@ def generate_pdf_subwork():
                 <td>-</td>
             </tr>
         """
+    details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
+                   f"<td><strong>{(reduction_quantity):.2f}</strong></td><td>-</td><td>-</td></tr>"
 
     # Add totals row
     details_rows += f"""
@@ -271,7 +275,8 @@ def generate_pdf_subwork():
             <td><strong>Rs. {(total_quantity-reduction_quantity)*rate:.2f}</strong></td>
         </tr>
      """
-
+    GD=f"{(total_quantity-reduction_quantity)*rate:.2f}"
+    GDNUM=num2words(GD)
     subworks_html = f"""
         <p>Default SFT: {default_sft}, Default CFT: {default_cft}</p>
         <table>
@@ -293,9 +298,9 @@ def generate_pdf_subwork():
             </tbody>
         </table>
         
-        <p>Total Quantity: {total_quantity:.2f}</p>
-        <p>Deduction Quantity: {reduction_quantity:.2f}</p>
         <h2>Grand Total: <strong>Rs. {(total_quantity-reduction_quantity)*rate:.2f}</strong></h2>
+        
+            <h2>Grand Total :<strong>Rs. {GDNUM} Only</strong></h2>
     """
 
     html_content = f"""
@@ -372,7 +377,7 @@ def generate_xlsx_subwork():
         total_quantity = 0
         grand_total = 0
         rate = default_sft if default_sft != 0 else default_cft
-
+        unit = "SFT" if default_sft != 0 else "CFT"
         for idx, subwork in enumerate(details, start=1):
             quantity = subwork.get("number") * subwork.get("length") * subwork.get("breadth")
             if default_cft != 0:
@@ -397,8 +402,9 @@ def generate_xlsx_subwork():
             ])
 
         # Add total row
-        # sheet.append(["", "", "", "", "", "Total", round(total_quantity, 2), rate, round(total_quantity * rate, 2)])
-        # sheet.append([])
+        # sheet.append(["", "", "", "", "", "Total", f"{round(total_quantity, 2)+""+unit}", "", ""])
+        sheet.append(["", "", "", "", "", "Total", round(total_quantity, 2), unit, ""])
+        sheet.append([])
 
         # Add reduction rows
         sheet.append(["Deductions"])
@@ -426,14 +432,17 @@ def generate_xlsx_subwork():
                 "",
                 # round(total, 2)
             ])
-
+        sheet.append(["", "", "", "", "", "Total", round(reduction_quantity, 2), unit, ""])
         # Add total reduction row
-        sheet.append(["", "", "", "", "", "Total",  round((total_quantity - reduction_quantity)),rate, round((total_quantity - reduction_quantity)*rate, 2)])
-        # sheet.append([])
+        sheet.append([])
+        sheet.append(["", "", "", "", "", "Total",  round((total_quantity - reduction_quantity)),f"{rate} R.s/{unit}", round((total_quantity - reduction_quantity)*rate, 2)])
 
         # Grand total
-        sheet.append([f"Net Quantity : {round((total_quantity - reduction_quantity), 2)}"])
+        # sheet.append([f"Net Quantity : {round((total_quantity - reduction_quantity), 2)}"])
+        GD=f"{round((total_quantity - reduction_quantity) * rate, 2)}"
+        GDNUM=num2words(GD)
         sheet.append([f"Grand Total (Rs.): {round((total_quantity - reduction_quantity) * rate, 2)}"])
+        sheet.append([f"Rupees {GDNUM} Only"])
 
         # Save Excel to a BytesIO stream
         output = BytesIO()
