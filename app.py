@@ -3,7 +3,7 @@ from xhtml2pdf import pisa
 from io import BytesIO
 from datetime import datetime
 from openpyxl import Workbook
-
+from num2words import num2words
 app = Flask(__name__)
 @app.route('/')
 def getroute():
@@ -18,7 +18,7 @@ def generate_pdf():
 
         subworks_html = ""
         grand_total = 0
-
+        unit=""
         for idx, subwork in enumerate(subworks, start=1):
             name = subwork.get("name", "Unnamed Subwork")
             default_sft = subwork["default"].get("SFT", 0)
@@ -32,9 +32,11 @@ def generate_pdf():
             for count, d in enumerate(details, start=1):
                 if default_sft > 0:
                     r=default_sft
+                    unit="SFT"
                     quantity = d['length'] * d['breadth'] * d['number']
                 elif default_cft > 0:
                     r=default_cft
+                    unit="CFT"
                     quantity = d['length'] * d['breadth'] * d['depth'] * d['number']
                 else:
                     quantity = 0  
@@ -42,6 +44,11 @@ def generate_pdf():
                 details_rows += f"<tr><td>{count}</td><td>{d['name']}</td><td>{d['number']}</td>" \
                                 f"<td>{d['length']}</td><td>{d['breadth']}</td><td>{d['depth']}</td>" \
                                 f"<td>{quantity:.2f}</td><td>-</td><td>-</td></tr>"                                
+            
+            details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
+                   f"<td><strong>{(total_quantity):.2f}</strong></td><td>-</td><td>-</td></tr>"
+
+            
             details_rows += f"<tr><td>Deduction</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>"
 
             reduction_quantity = 0
@@ -50,9 +57,11 @@ def generate_pdf():
             for count, r in enumerate(reductions, start=1):
                 if default_sft > 0:
                     rr=default_sft
+                    unit="SFT"
                     quantity = r['length'] * r['breadth'] * r['number']
                 elif default_cft > 0:
                     rr=default_cft
+                    unit="CFT"
                     quantity = r['length'] * r['breadth'] * r['depth'] * r['number']
                 else:
                     quantity = 0
@@ -60,7 +69,9 @@ def generate_pdf():
                 details_rows += f"<tr><td>{count}</td><td>{r['name']}</td><td>{r['number']}</td>" \
                                    f"<td>{r['length']}</td><td>{r['breadth']}</td><td>{r['depth']}</td>" \
                                    f"<td>{quantity:.2f}</td><td>-</td><td>-</td></tr>"
-            
+            details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
+                   f"<td><strong>{(reduction_quantity):.2f}</strong></td><td>-</td><td>-</td></tr>"
+
             
             net_quantity = total_quantity - reduction_quantity
             rate=0
@@ -71,8 +82,10 @@ def generate_pdf():
            
             total_cost = net_quantity * rate
             grand_total += total_cost
-            details_rows += f"<tr><td colspan='6' style='text-align: center;'>-</td>" \
-                   f"<td>{(net_quantity):.2f}</td><td>{rate}</td><td><strong>Rs. {(net_quantity) * rate:.2f}</strong></td></tr>"
+            gt = f"{grand_total:.2f}"
+            GrandInWords=num2words(gt)
+            details_rows += f"<tr><td colspan='6' style='text-align: center;'>Total</td>" \
+                   f"<td><strong>{(net_quantity):.2f}</strong></td><td><strong>{rate} Rs. / {unit}</strong></td><td><strong>Rs. {(net_quantity) * rate:.2f}</strong></td></tr>"
 
             
             subworks_html += f"""
@@ -131,6 +144,7 @@ def generate_pdf():
             <p><strong>Date:</strong> {datetime.now().strftime('%Y-%m-%d')}</p>
             {subworks_html}
             <h2>Grand Total :<strong> Rs. {grand_total:.2f}</strong></h2>
+            <h2>Grand Total :<strong>Rs. {GrandInWords} Only</strong></h2>
         </body>
         </html>
         """
