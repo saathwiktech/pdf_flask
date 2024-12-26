@@ -90,13 +90,13 @@ def generate_pdf():
                 </tbody>
             </table>
            
-            <p>Total Quantity: {total_quantity:.2f}</p>
-
-            <p> Deductions: <strong>{reduction_quantity:.2f}</strong></p>
-            <p> Net Quantity: <strong>{net_quantity:.2f}</strong></p>
-            <p>Total Cost: <strong>Rs. {total_cost:.2f}</strong></p>
+            
             """
+# <p>Total Quantity: {total_quantity:.2f}</p>
 
+#             <p> Deductions: <strong>{reduction_quantity:.2f}</strong></p>
+#             <p> Net Quantity: <strong>{net_quantity:.2f}</strong></p>
+#             <p>Total Cost: <strong>Rs. {total_cost:.2f}</strong></p>
       
         html_content = f"""
         <html>
